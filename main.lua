@@ -15,7 +15,8 @@ local SFX_COLL_OOB = 2
 local SFX_GRAB = 3
 local SFX_DROP = 4
 
-local dbg_player = true
+local dbg_player = false
+local dbg_items = true
 
 -- player
 local pl = {
@@ -144,6 +145,7 @@ end
 
 function _draw()
 	cls()
+  pal()
 	
   local rc, pcxy = pos2rcxy(pl.pos)
   local pxy = {
@@ -193,5 +195,16 @@ function _draw()
       .." cam:"..cam_tgt[1]..","..cam_tgt[2],
        0,120
      )
+  end
+  if dbg_items then
+    camera()
+    pal(6, 14)
+    local x = 0
+    for i,v in pairs(objs) do
+      if v.has then
+        spr(i, x*8 % 128, flr(x*8/128))
+        x += 1
+      end
+    end
   end
 end
